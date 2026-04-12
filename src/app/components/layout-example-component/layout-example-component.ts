@@ -64,7 +64,7 @@ export class LayoutExampleComponent {
           },
         },
         {
-          className: 'col-12 col-md-6',
+          className: 'col-12 col-md-6 mb-3',
           key: 'lastName',
           type: 'input',
           props: {
@@ -165,9 +165,12 @@ export class LayoutExampleComponent {
           key: 'companyName',
           type: 'input',
           // En el tema Bootstrap el wrapper visual ya se aplica por defecto.
-          // Solo define wrappers manualmente cuando quieras un envoltorio custom.
+          // Solo define wrappers manualmente cuando se quiera un envoltorio custom.
           // hideExpression se evalua en cada cambio de model.
           // true => se oculta el campo; false => se muestra.
+          //? isCompany es el nombre de la propiedad en el model. Si marcas el checkbox, model.isCompany será true.
+          //? !model?.isCompany:  "Oculta este campo si NO existe o es falso isCompany en el modelo".
+          // Si el checkbox anterior está apagado, este input de "Nombre de empresa" no existe en el DOM..
           hideExpression: (model: any) => !model?.isCompany,
           props: {
             label: 'Nombre fiscal de empresa',
@@ -178,9 +181,9 @@ export class LayoutExampleComponent {
           className: 'col-12 col-md-6',
           key: 'taxId',
           type: 'input',
-          // expressionProperties permite mutar propiedades del campo en runtime.
-          // Clave: ruta de la propiedad a actualizar.
-          // Valor: funcion que devuelve el nuevo valor segun model/formState/field.
+          //! expressionProperties permite mutar propiedades del campo en runtime.
+          //? Clave: ruta de la propiedad a actualizar.
+          //? Valor: funcion que devuelve el nuevo valor segun model/formState/field.
           expressionProperties: {
             // Si no es empresa, deshabilitamos el input.
             'props.disabled': (model: any) => !model?.isCompany,
@@ -199,7 +202,7 @@ export class LayoutExampleComponent {
 
     /** BLOQUE 6: Grupo visual anidado */
     {
-      // Evitamos borde duro para que el contenedor no parezca un input cortado.
+      // Evita borde duro para que el contenedor no parezca un input cortado.
       fieldGroupClassName: 'bg-light p-3 mt-3 rounded',
       fieldGroup: [
         {
@@ -213,41 +216,6 @@ export class LayoutExampleComponent {
       ],
     },
   ];
-
-  /**
-   * @description
-   * Referencia rapida para colecciones repetibles.
-   * Nota: un repeat real suele apoyarse en un tipo custom (por ejemplo, type: 'repeat').
-   * Este snippet se deja como consulta y no se renderiza en este ejemplo.
-   */
-  public readonly fieldArrayReference = {
-    key: 'phones',
-    type: 'repeat',
-    props: {
-      addText: 'Agregar telefono',
-    },
-    fieldArray: {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-12 col-md-6',
-          type: 'input',
-          props: {
-            label: 'Tipo',
-            placeholder: 'Movil, trabajo, casa',
-          },
-        },
-        {
-          className: 'col-12 col-md-6',
-          type: 'input',
-          props: {
-            label: 'Numero',
-            placeholder: '600123123',
-          },
-        },
-      ],
-    },
-  } as FormlyFieldConfig;
 
   /**
    * @description Maneja el envío del formulario.
