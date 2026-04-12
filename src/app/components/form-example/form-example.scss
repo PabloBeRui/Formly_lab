@@ -1,0 +1,26 @@
+.form-container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  max-width: 600px;
+  margin: 0 auto;
+
+  &__title {
+    margin-bottom: 1.5rem;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+
+  &__actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    // Estilos extra para el botón si no quieres usar solo los de Bootstrap
+    min-width: 120px;
+  }
+}

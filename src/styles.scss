@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+// Importar Bootstrap primero si no lo hiciste en el angular.json
+ @import "bootstrap/dist/css/bootstrap.min.css";
+
+:root {
+  --bg-color: #f8f9fa;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilos para el Layout principal */
+.main-layout {
+  &__container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
