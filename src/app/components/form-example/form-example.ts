@@ -1,46 +1,88 @@
+import { JsonPipe } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormlyForm, FormlyFieldConfig } from '@ngx-formly/core';
-import { Subject } from 'rxjs';
+import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 @Component({
   selector: 'form-example',
   standalone: true,
-  imports: [ReactiveFormsModule, FormlyForm],
+  imports: [ReactiveFormsModule, FormlyForm, JsonPipe],
   templateUrl: './form-example.html',
   styleUrl: './form-example.scss',
 })
-export class FormExample implements OnDestroy {
+export class FormExample {
   /** @param {FormBuilder} _fb - Servicio inyectado para la creación de formularios */
   private _fb = inject(FormBuilder);
-
-  /** @param {Subject<void>} _destroy$ - Subject para gestionar la desuscripción manual */
-  private _destroy$ = new Subject<void>();
 
   /** @param {FormGroup} form - Instancia del formulario reactivo */
   public form: FormGroup = this._fb.group({});
 
   /** @param {any} model - Modelo de datos que vincula Formly */
-  public model: any = { email: 'email@gmail.com' };
+  public model: any = { name: 'Pedro' };
+  /** @param {FormlyFormOptions} options - Opciones de configuración de Formly */
+  public options: FormlyFormOptions = {};
 
   /** @param {FormlyFieldConfig[]} fields - Configuración de los campos del formulario */
   public fields: FormlyFieldConfig[] = [
     {
-      key: 'name',
-      type: 'input',
+      key: 'username',
+      type: 'input', // Tipo de campo (input, textarea, checkbox, radio, select)
       props: {
-        label: 'Nombre completo',
-        placeholder: 'Escribe tu nombre...',
-        required: true,
+        label: 'Nombre de usuario', // Etiqueta visible
+        placeholder: 'Ej: juan_perez', // Texto de ayuda interno
+        required: true, // Validación: obligatorio
+        minLength: 5, // Validación: longitud mínima
+        maxLength: 20, // Validación: longitud máxima
+        description: 'El nombre debe ser único', // Texto pequeño debajo del campo
+        disabled: false, // Estado: deshabilitado
+        readonly: false, // Estado: solo lectura
+        // type: 'password', // Cambia el comportamiento del input (password, number, email, date)
+      },
+      // Propiedad para mensajes de error personalizados
+      validation: {
+        messages: {
+          required: (error, field: FormlyFieldConfig) =>
+            `El campo "${field.props?.label}" es obligatorio`,
+          minlength: (error, field: FormlyFieldConfig) =>
+            `Mínimo ${field.props?.minLength} caracteres`,
+        },
       },
     },
     {
-      key: 'description',
+      key: 'bio',
       type: 'textarea',
       props: {
         label: 'Biografía',
-        placeholder: 'Cuéntanos sobre ti...',
-        rows: 3,
+        rows: 5, // Propiedad específica de textarea: altura inicial
+        placeholder: 'Cuéntanos algo sobre ti...',
+      },
+    },
+    {
+      key: 'gender',
+      type: 'radio',
+      props: {
+        label: 'Género',
+        required: true,
+        // Las opciones siempre siguen esta estructura de objetos
+        options: [
+          { label: 'Masculino', value: 'M' },
+          { label: 'Femenino', value: 'F' },
+                  ],
+        formCheck: 'inline', // Opción Bootstrap: muestra los radios en la misma línea
+      },
+    },
+    {
+      key: 'country',
+      type: 'select',
+      props: {
+        label: 'País de residencia',
+        placeholder: 'Selecciona un país', // En select, aparece como la primera opción vacía
+        options: [
+          { label: 'España', value: 'ES' },
+          { label: 'México', value: 'MX' },
+          { label: 'Argentina', value: 'AR' },
+        ],
+        multiple: false, // Si se pone en true, permite selección múltiple (si el tema lo soporta)
       },
     },
     {
@@ -48,38 +90,76 @@ export class FormExample implements OnDestroy {
       type: 'input',
       props: {
         label: 'Edad',
-        type: 'number', // Input de tipo numérico
-        min: 18,
+        type: 'number', // Renderiza un input numérico con flechas
+        min: 18, // Valor numérico mínimo
+        max: 99, // Valor numérico máximo
+      },
+      validation: {
+        messages: {
+          min: (error, field: FormlyFieldConfig) => `Debes tener al menos ${field.props?.min} años`,
+        },
       },
     },
     {
-      key: 'active',
+      key: 'terms',
       type: 'checkbox',
       props: {
-        label: '¿Usuario activo?',
-        description: 'Marca esta casilla si el usuario puede iniciar sesión',
+        // En checkbox, la label suele ir al lado del cuadro
+        label: 'Acepto la política de privacidad',
+        required: true,
+        // pattern: 'true', // Truco para obligar a que el checkbox sea true para ser válido
+      },
+      validation: {
+        messages: {
+          required: () => 'Es obligatorio aceptar los términos',
+        },
       },
     },
   ];
 
   /**
-   * @description Procesa el envío del formulario.
-   * @param {any} model - El objeto de datos resultante del formulario.
+   * @description Maneja el envío del formulario.
+   * Valida todos los campos, muestra errores si los hay,
+   * y resetea al valor inicial si es válido.
+   * @param {any} data - Los datos actuales del modelo.
    */
-  public onSubmit(model: any): void {
-    if (this.form.valid) {
-      console.log('Formulario enviado:', model);
+  public onSubmit(data: any): void {
+    if (this.form.invalid) {
+      /** * Si el formulario es inválido, marcamos todos los controles como
+       * 'touched' (tocados). Formly detectará esto y mostrará
+       * automáticamente los mensajes de error en la UI.
+       */
+      this.form.markAllAsTouched();
+      console.warn('Formulario inválido, revisa los errores.');
+      return;
     }
-  }
 
-  /**
-   * @description Ciclo de vida para limpiar suscripciones.
-   */
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+    console.log('Datos enviados:',  data );
+
+    /**!
+     * Para resetear el formulario a su valor inicial en Formly:
+     * 1. Usamos this.form.reset() para limpiar el estado de Angular (validaciones/touched).
+     * 2. Reasignamos el modelo a su estado original para que Formly actualice los inputs.
+     */
+    const emptyModel = {};
+    this.model = emptyModel;
+
+    // Limpia modelo + estado de Formly (pristine/untouched) y evita mostrar errores al volver vacío.
+    this.options.resetModel?.(emptyModel);
+
+    // También resetea el estado `submitted` del formulario padre para que Formly no pinte errores.
+    this.options.parentForm?.resetForm(emptyModel);
   }
 }
+
+//!metodos
+
+// resetModel(): Es un método exclusivo de Formly (dentro de FormlyFormOptions). Su función es devolver el modelo a su estado inicial y, muy importante, resetear los validadores internos de Formly para que no "griten" (se pongan rojos) al vaciarse.
+
+// resetForm(): En realidad, este método suele venir del FormGroupDirective de Angular o de cómo Formly se integra con el formulario nativo. Al llamarlo a través de parentForm, estás limpiando el estado de "enviado" (submitted) del formulario. Si no limpias el estado submitted, los errores seguirán apareciendo aunque el campo sea untouched.
+
+
+
 
 //? Segund documentacion
 

@@ -24,3 +24,25 @@
     min-width: 120px;
   }
 }
+.model-inspector {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background-color: #272822; // Fondo estilo editor de código (Monokai)
+  border-radius: 6px;
+  border-left: 5px solid #66d9ef;
+
+  &__title {
+    color: #f8f8f2;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  &__data {
+    color: #a6e22e; // Color verde neón para los datos
+    font-size: 0.85rem;
+    margin: 0;
+    overflow-x: auto; // Por si el JSON se hace muy ancho
+  }
+}
