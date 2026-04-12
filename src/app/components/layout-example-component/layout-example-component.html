@@ -1,0 +1,15 @@
+<section class="form-container">
+  <h2 class="form-container__title">Layouts</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"> </formly-form>
+
+    <div class="form-container__actions">
+      <button type="submit" class="btn btn-primary form-container__button">Guardar Datos</button>
+    </div>
+  </form>
+  <div class="model-inspector">
+    <h3 class="model-inspector__title">Estado del model (Live)</h3>
+    <pre class="model-inspector__data">{{ model | json }}</pre>
+  </div>
+</section>
