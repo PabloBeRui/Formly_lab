@@ -21,7 +21,7 @@ export class ReactiveExampleComponent {
   /** @param {FormlyFormOptions} options - Opciones de configuración de Formly */
   public options: FormlyFormOptions = {};
 
-  //! Aquí es donde entran las dos propiedades más potentes de Formly:
+  //! Aquí es donde entran las dos propiedades más potentes de Formly (explicadas en detalle en el bloque 5 layout-example-component):
 
   //? hideExpression: Sirve para mostrar u ocultar campos dinámicamente.
 
@@ -41,19 +41,23 @@ export class ReactiveExampleComponent {
       },
     },
     {
-      // Usamos un fieldGroup para envolver los dos inputs y poder compararlos
+      //? Usamos un fieldGroup para envolver los dos inputs y poder compararlos
       fieldGroupClassName: 'row',
       hideExpression: (model) => !model.hasPet,
       validators: {
-        // DICCIONARIO: Validadores de Grupo
-        // Comprobamos que el valor de 'petName' sea igual al de 'petNameConfirm'
+        //? Validadores de Grupo - fieldMatch: Permite validar un conjunto de campos comparándolos entre sí.
+        //? En este caso, se asegura de que 'petName' y 'petNameConfirm' tengan el mismo valor.
+
         fieldMatch: {
+          // el validador a nivel de fieldGroup, el control que recibe la función no es un input individual,
+          //  sino el FormGroup que envuelve a los hijos.
           expression: (control: any) => {
-            const value = control.value;
+            const value = control.value; //ejemp { petName: 'Firulais', petNameConfirm: 'Firulais' }.
             return value.petNameConfirm === value.petName || !value.petNameConfirm;
+            //? || !value.petNameConfirm -> o si el segundo campo todavía está vacío
           },
           message: 'Los nombres no coinciden',
-          errorPath: 'petNameConfirm', // Indica que el error se muestre en el segundo input
+          errorPath: 'petNameConfirm', //? Indica que el error se muestre en el segundo input
         },
       },
       fieldGroup: [
@@ -82,6 +86,7 @@ export class ReactiveExampleComponent {
     {
       template: '<hr />',
     },
+    //! Ejemplo de expressionProperties para cambiar dinámicamente las propiedades de un campo según el modelo.
     {
       key: 'country',
       type: 'select',
@@ -104,7 +109,11 @@ export class ReactiveExampleComponent {
       expressionProperties: {
         'props.required': (model) => model.country === 'ES',
         'props.placeholder': (model) =>
-          model.country === 'ES' ? 'Ej: 28001' : 'Introduce código internacional',
+          model.country === 'ES'
+            ? 'Ej: 28001'
+            : model.country === 'OTHER'
+              ? 'Introduce código internacional'
+              : '',
       },
     },
   ];
