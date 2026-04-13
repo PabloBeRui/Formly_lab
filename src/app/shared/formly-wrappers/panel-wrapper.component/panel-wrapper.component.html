@@ -1,0 +1,14 @@
+<div class="card mb-3 border-primary">
+  <div class="card-header bg-primary text-white">
+    {{ props.label }}
+  </div>
+
+  <div class="card-body">
+    <!--? El marcador #fieldComponent es obligatorio para que Formly sepa dónde colocar el control. -->
+    <ng-container #fieldComponent></ng-container>
+  </div>
+
+  <div *ngIf="props.description" class="card-footer small text-muted">
+    {{ props.description }}
+  </div>
+</div>

@@ -9,6 +9,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideFormlyCore } from '@ngx-formly/core';
 import { RepeatTypeComponent } from './shared/formly-types/repeat-type-component/repeat-type-component';
+import { PanelWrapperComponent } from './shared/formly-wrappers/panel-wrapper.component/panel-wrapper.component';
+import { DarkWrapperComponent } from './shared/formly-wrappers/dark-wrapper.component/dark-wrapper.component';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +28,12 @@ export const appConfig: ApplicationConfig = {
             component: RepeatTypeComponent,
           },
         ],
+        //Registro de WRAPPERS
+        wrappers: [
+          { name: 'panel', component: PanelWrapperComponent },
+          { name: 'dark', component: DarkWrapperComponent },
+        ],
+        // Mensajes de validación globales (se pueden sobreescribir a nivel de campo)
         validationMessages: [
           { name: 'required', message: 'Este campo es obligatorio' },
           { name: 'pattern', message: 'El formato no es válido' },
