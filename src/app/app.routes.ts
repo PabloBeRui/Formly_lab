@@ -4,6 +4,7 @@ import { LayoutExampleComponent } from './components/layout-example-component/la
 import { ReactiveExampleComponent } from './components/reactive-example-component/reactive-example-component';
 import { DateAndValidationComponent } from './components/date-and-validation-component/date-and-validation-component';
 import { RepeatSectionComponent } from './components/repeat-section-component/repeat-section-component';
+import { JsonSchemaComponent } from './components/json-schema-component/json-schema-component';
 
 export const routes: Routes = [
   { path: 'form-example', component: FormExample },
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: 'reactive-example', component: ReactiveExampleComponent },
   { path: 'date-and-validation', component: DateAndValidationComponent },
   { path: 'repeat-section', component: RepeatSectionComponent },
+  { path: 'json-schema', component: JsonSchemaComponent },
 
   { path: '', redirectTo: '/form-example', pathMatch: 'full' },
   { path: '**', redirectTo: '/form-example', pathMatch: 'full' },
