@@ -1,0 +1,29 @@
+<div class="mb-4 p-3 border rounded bg-light">
+  <h5 *ngIf="props.label">{{ props.label }}</h5>
+  <p *ngIf="props.description" class="text-muted small">{{ props.description }}</p>
+
+  <div
+    *ngFor="let fieldGroup of field.fieldGroup; let i = index"
+    class="row align-items-center mb-3"
+  >
+    <div class="col">
+      <formly-field [field]="fieldGroup"></formly-field>
+    </div>
+
+    <div class="col-auto">
+      <button type="button" class="btn btn-outline-danger btn-sm" (click)="remove(i)">
+        Eliminar
+      </button>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-2">
+    <button type="button" class="btn btn-success" (click)="add()">
+      {{ props['addText'] || 'Añadir' }}
+    </button>
+  </div>
+</div>
+
+
+<!-- ¿Por qué el cambio de props.label a props['label']? -->
+<!--  FormlyFieldProps permite cualquier nombre de propiedad (un index signature). Al usar ['label'], le dices a TypeScript: "Sé que esta propiedad puede existir dinámicamente, búscala así". Si usas props.label, TypeScript espera que 'label' esté definido explícitamente en la interfaz, lo cual no es el caso aquí. Por eso, props['label'] es la forma correcta de acceder a esta propiedad dinámica sin errores de tipo. -->
