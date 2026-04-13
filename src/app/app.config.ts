@@ -14,7 +14,16 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    // Configuración unificada según la doc v7
-    provideFormlyCore(withFormlyBootstrap(), ),
+    // Configuración unificada según formly v7: primero el tema Bootstrap y luego mensajes globales.
+    provideFormlyCore([
+      ...withFormlyBootstrap(),
+      {
+        validationMessages: [
+          { name: 'required', message: 'Este campo es obligatorio' },
+          { name: 'pattern', message: 'El formato no es válido' },
+          { name: 'email', message: 'El correo electrónico no es válido' },
+        ],
+      },
+    ]),
   ],
 };
