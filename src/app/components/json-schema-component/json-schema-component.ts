@@ -104,3 +104,11 @@ export class JsonSchemaComponent {
 // Formly necesita una lista [].
 
 // Al hacer return [schemaFields], envolvuelve ese campo único en los corchetes que Formly necesita para poder leerlo.
+
+//! Conceptos clave:
+
+//? Extracción del Root: Evitas el "contenedor invisible" para que Bootstrap pinte los campos directamente.
+
+//? Garantía de Array: Aseguras que Formly siempre reciba un iterable [], cumpliendo con su contrato de interfaz.
+
+//? Desacoplamiento: Tu componente es ahora una "caja negra" que procesa cualquier Schema.
