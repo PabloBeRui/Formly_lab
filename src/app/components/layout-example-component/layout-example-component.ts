@@ -142,9 +142,9 @@ export class LayoutExampleComponent {
 
     /**
      * BLOQUE 5: Visibilidad y comportamiento dinamico
-     * - hideExpression: oculta/muestra un campo segun el model.
-     * - expressionProperties: cambia propiedades del campo en tiempo real (disabled, label, description, etc.).
-     * - wrappers: envuelve el campo con componentes visuales extra (por ejemplo, form-field del tema).
+     *? - hideExpression: oculta/muestra un campo segun el model.
+     *? - expressionProperties: cambia propiedades del campo en tiempo real (disabled, label, description, etc.).
+     *? - wrappers: envuelve el campo con componentes visuales extra (por ejemplo, form-field del tema).
      */
     {
       template: '<hr /><h5 class="mb-3">Campos dinamicos</h5>',
@@ -251,3 +251,35 @@ export class LayoutExampleComponent {
     this.options.parentForm?.resetForm(emptyModel);
   }
 }
+
+/** * BLOQUE OPCIONAL: Lógica cruzada (Exclusividad)
+ *? Si quisiéramos que 'isCompany' y 'isPublic' fueran excluyentes:
+ */
+/*
+{
+  key: 'isCompany',
+  type: 'checkbox',
+  props: {
+    label: 'Es cuenta de empresa',
+    change: (field) => {
+      //? Si marco empresa, fuerzo a que no sea público
+      if (field.formControl?.value) {
+        this.model.isPublic = false;
+        //? Notificamos a Formly que el modelo ha cambiado manualmente
+        this.options.detectChanges?.(field);
+      }
+    }
+  }
+},
+{
+  key: 'isPublic',
+  type: 'checkbox',
+  props: { label: 'Perfil público' },
+  expressions: {
+    //? Deshabilitamos este si el de empresa está marcado
+    'props.disabled': 'model.isCompany'
+  }
+}
+*/
+
+/* ¿Por qué hacerlo así?props.change: Es una función que se dispara cuando el usuario interactúa. Es el lugar perfecto para realizar "efectos secundarios" en el modelo (como desmarcar otro check).this.options.detectChanges: Al cambiar el this.model manualmente por código, a veces Formly necesita un pequeño empujón para enterarse de que debe refrescar la pantalla.Coherencia visual: Al añadir el props.disabled en el segundo checkbox mediante una expresión, le das una pista visual al usuario de por qué no puede marcarlo si el otro está activo.Resumen visual de la lógica cruzada: Usuario activa A - Script desactiva B - UI bloquea B. */
