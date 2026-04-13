@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 @Component({
@@ -40,6 +40,7 @@ export class FormExample {
       },
       // Propiedad para mensajes de error personalizados
       validation: {
+        //? 'field' es la configuración completa del campo específico que falló.
         messages: {
           required: (error, field: FormlyFieldConfig) =>
             `El campo "${field.props?.label}" es obligatorio`,
@@ -67,8 +68,8 @@ export class FormExample {
         options: [
           { label: 'Masculino', value: 'M' },
           { label: 'Femenino', value: 'F' },
-                  ],
-        formCheck: 'inline', // Opción Bootstrap: muestra los radios en la misma línea
+        ],
+        formCheck: 'inline', // Opción de formly para Bootstrap: muestra los radios en la misma línea
       },
     },
     {
@@ -106,12 +107,15 @@ export class FormExample {
       props: {
         // En checkbox, la label suele ir al lado del cuadro
         label: 'Acepto la política de privacidad',
-        required: true,
+        // required: true, // no se usa, se hace una validacion personalizada
         // pattern: 'true', // Truco para obligar a que el checkbox sea true para ser válido
       },
-      validation: {
-        messages: {
-          required: () => 'Es obligatorio aceptar los términos',
+      validators: {
+        //? IMPORTANTE: En checkboxes, 'required' no basta porque 'false' cuenta como valor.
+        // Se usa un validador personalizado para obligar a que el valor sea estrictamente 'true'.
+        requiredTrue: {
+          expression: (control: AbstractControl) => control.value === true,
+          message: 'Debes aceptar los términos para continuar',
         },
       },
     },
@@ -126,7 +130,7 @@ export class FormExample {
   public onSubmit(data: any): void {
     if (this.form.invalid) {
       /** * Si el formulario es inválido, marcamos todos los controles como
-       * 'touched' (tocados). Formly detectará esto y mostrará
+       * 'touched'. Formly detectará esto y mostrará
        * automáticamente los mensajes de error en la UI.
        */
       this.form.markAllAsTouched();
@@ -134,7 +138,7 @@ export class FormExample {
       return;
     }
 
-    console.log('Datos enviados:',  data );
+    console.log('Datos enviados:', data);
 
     /**!
      * Para resetear el formulario a su valor inicial en Formly:
@@ -158,8 +162,15 @@ export class FormExample {
 
 // resetForm(): En realidad, este método suele venir del FormGroupDirective de Angular o de cómo Formly se integra con el formulario nativo. Al llamarlo a través de parentForm, estás limpiando el estado de "enviado" (submitted) del formulario. Si no limpias el estado submitted, los errores seguirán apareciendo aunque el campo sea untouched.
 
+//? Flujo de la informacion:
 
+// Paso A: En el TS, this._fb.group({}) crea una "estantería" vacía.
 
+// Paso B: En el HTML, <form [formGroup]="form"> le dice a Angular: "Usa esta estantería".
+
+// Paso C: <formly-form [form]="form" ...> le dice a Formly: "Toma la estantería de Angular y empieza a llenarla con los controles que definí en fields".
+
+// Paso D: Formly mira el model. Si ve { name: 'Pedro' }, automáticamente pone "Pedro" dentro del input que tiene la key: 'name'.
 
 //? Segund documentacion
 
