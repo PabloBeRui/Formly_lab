@@ -64,9 +64,21 @@ export class JsonSchemaComponent {
   //! El método toFieldConfig() genera campos. Si devuelve tipo "object",
   //! lo envolvemos en un fieldGroup para que Formly lo entienda correctamente.
   public fields: FormlyFieldConfig[] = (() => {
+    /** *
+     * * toFieldConfig() convierte el Schema en un objeto FormlyFieldConfig.
+     * Si el Schema es de tipo 'object', el resultado NO es una lista, sino UN SOLO OBJETO
+     * "padre" que contiene a todos los demás dentro.
+     */
     //?  devuelve un objeto que representa todo el JSON Schema.
     const schemaFields = this._formlyJsonschema.toFieldConfig(this._schema);
 
+    /**
+     * :
+     * Por definición de Formly, un JSON Schema 'object' mapea sus propiedades a 'fieldGroup'.
+     * Si dejamos el objeto padre, Formly crearía un nivel extra en los datos: { undefined: { nombre: '...' } }.
+     *  Al retornar directamente 'fieldGroup', "vaciamos la caja" para que los campos
+     * (firstName, age, etc.) queden en la raíz del formulario y el modelo sea plano.
+     */
     //? Si el Schema es de tipo 'object', Formly guarda los inputs reales
     //?  dentro de la propiedad 'fieldGroup'.
     if (schemaFields.type === 'object' && schemaFields.fieldGroup) {
@@ -74,8 +86,12 @@ export class JsonSchemaComponent {
       // la lista de campos que hay dentro.
       return schemaFields.fieldGroup;
     }
-    // Fallback:
-    // Si no es un objeto, devuelve el campo tal cual dentro de un array.
+    /** 3. FALLBACK:
+     * Formly exige que la propiedad 'fields' sea siempre un Array [].
+     * Si el Schema no fuera un objeto (y por tanto no tuviera fieldGroup),
+     *  resultado en corchetes para asegurar que el componente no explote.
+     */
+    //? Si no es un objeto, devuelve el campo tal cual dentro de un array.
     return [schemaFields];
   })();
 
