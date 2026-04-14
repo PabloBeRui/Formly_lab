@@ -21,4 +21,3 @@ export const routes: Routes = [
   { path: '', redirectTo: '/form-example', pathMatch: 'full' },
   { path: '**', redirectTo: '/form-example', pathMatch: 'full' },
 ];
-
