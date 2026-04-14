@@ -46,7 +46,7 @@ export class LayoutExampleComponent {
    * @description
    * Diccionario de referencia para aprender layout en Formly con Bootstrap.
    * Clave mental:
-   * - fieldGroupClassName: controla el contenedor (por ejemplo, row).
+   * - fieldGroupClassName: controla el contenedor (por ejemplo, row). fila
    * - className: controla la columna/ancho de cada campo.
    */
   public fields: FormlyFieldConfig[] = [
@@ -237,19 +237,16 @@ export class LayoutExampleComponent {
     console.log('Datos enviados:', data);
 
     /**
-     * Para vaciar el formulario tras un envio valido:
-     * 1. Reasignamos el modelo a un objeto vacio.
-     * 2. Ejecutamos resetModel para limpiar modelo y estado interno de Formly.
-     * 3. Reiniciamos parentForm para limpiar el estado submitted del formulario padre.
+     * Para limpiar el formulario tras un envío válido:
+     * 1. Ejecutamos resetModel() para restablecer el modelo y el estado interno de Formly.
+     * 2. Ejecutamos parentForm.resetForm() para limpiar el estado submitted del formulario padre.
      */
-    const emptyModel = {};
-    this.model = emptyModel;
 
     // Limpia modelo + estado de Formly (pristine/untouched) y evita mostrar errores al volver vacío.
-    this.options.resetModel?.(emptyModel);
+    this.options.resetModel?.();
 
     // También resetea el estado `submitted` del formulario padre para que Formly no pinte errores.
-    this.options.parentForm?.resetForm(emptyModel);
+    this.options.parentForm?.resetForm();
   }
 }
 

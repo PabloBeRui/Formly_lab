@@ -88,7 +88,7 @@ export class DateAndValidationComponent {
       key: 'appointment',
       type: 'input',
       props: {
-        type: 'datetime-local', 
+        type: 'datetime-local',
         label: 'Cita con el consultor',
         description: 'Horario disponible de 09:00 a 18:00',
       },
@@ -118,8 +118,7 @@ export class DateAndValidationComponent {
             if (date < actualDate) return false; // No permite fechas pasadas
             return date.getHours() >= 9 && date.getHours() <= 18;
           },
-          message:
-            'Fecha u hora no disponible. El horario de atención es de 09:00 a 18:00 y no se permiten fechas pasadas.',
+          message: 'Hora no disponible. El horario de atención es de 09:00 a 18:00.',
         },
       },
     },
@@ -145,19 +144,16 @@ export class DateAndValidationComponent {
     console.log('Datos enviados:', data);
 
     /**
-     * Para vaciar el formulario tras un envio valido:
-     * 1. Reasignamos el modelo a un objeto vacio.
-     * 2. Ejecutamos resetModel para limpiar modelo y estado interno de Formly.
-     * 3. Reiniciamos parentForm para limpiar el estado submitted del formulario padre.
+     * Para limpiar el formulario tras un envío válido:
+     * 1. Ejecutamos resetModel() para restablecer el modelo y el estado interno de Formly.
+     * 2. Ejecutamos parentForm.resetForm() para limpiar el estado submitted del formulario padre.
      */
-    const emptyModel = {};
-    this.model = emptyModel;
 
     // Limpia modelo + estado de Formly (pristine/untouched) y evita mostrar errores al volver vacío.
-    this.options.resetModel?.(emptyModel);
+    this.options.resetModel?.();
 
     // También resetea el estado `submitted` del formulario padre para que Formly no pinte errores.
-    this.options.parentForm?.resetForm(emptyModel);
+    this.options.parentForm?.resetForm();
   }
 }
 

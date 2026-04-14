@@ -140,27 +140,24 @@ export class FormExample {
     console.log('Datos enviados:', data);
 
     /**
-     * Para vaciar el formulario tras un envío válido:
-     * 1. Reasignamos el modelo a un objeto vacío.
-     * 2. Ejecutamos resetModel para limpiar modelo y estado interno de Formly.
-     * 3. Reiniciamos parentForm para limpiar el estado submitted del formulario padre.
+     * Para limpiar el formulario tras un envío válido:
+     * 1. Ejecuta resetModel() para restablecer el modelo y el estado interno de Formly.
+     * 2. Ejecuta parentForm.resetForm() para limpiar el estado submitted del formulario padre.
      */
-    const emptyModel = {};
-    this.model = emptyModel;
 
     // Limpia modelo + estado de Formly (pristine/untouched) y evita mostrar errores al volver vacío.
-    this.options.resetModel?.(emptyModel);
+    this.options.resetModel?.();
 
     // También resetea el estado `submitted` del formulario padre para que Formly no pinte errores.
-    this.options.parentForm?.resetForm(emptyModel);
+    this.options.parentForm?.resetForm();
   }
 }
 
 //!metodos
 
-// resetModel(): Es un método exclusivo de Formly (dentro de FormlyFormOptions). Su función es devolver el modelo a su estado inicial y, muy importante, resetear los validadores internos de Formly para que no "griten" (se pongan rojos) al vaciarse.
+//* resetModel(): Es un método exclusivo de Formly (dentro de FormlyFormOptions). Su función es devolver el modelo a su estado inicial y, muy importante, resetear los validadores internos de Formly para que no "griten" (se pongan rojos) al vaciarse.
 
-// resetForm(): En realidad, este método suele venir del FormGroupDirective de Angular o de cómo Formly se integra con el formulario nativo. Al llamarlo a través de parentForm, estás limpiando el estado de "enviado" (submitted) del formulario. Si no limpias el estado submitted, los errores seguirán apareciendo aunque el campo sea untouched.
+//* resetForm(): En realidad, este método suele venir del FormGroupDirective de Angular o de cómo Formly se integra con el formulario nativo. Al llamarlo a través de parentForm, estás limpiando el estado de "enviado" (submitted) del formulario. Si no limpias el estado submitted, los errores seguirán apareciendo aunque el campo sea untouched.
 
 //? Flujo de la informacion:
 
