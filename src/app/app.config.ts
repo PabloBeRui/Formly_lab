@@ -36,7 +36,7 @@ export const appConfig: ApplicationConfig = {
           { name: 'dark', component: DarkWrapperComponent },
         ],
         //? Registro de la lógica de extensión global (se ejecuta para cada campo)
-        extensions: [{ name: 'example', extension: exampleExtension }],
+        // extensions: [{ name: 'example', extension: exampleExtension }],
         // Mensajes de validación globales (se pueden sobreescribir a nivel de campo)
         validationMessages: [
           { name: 'required', message: 'Este campo es obligatorio' },

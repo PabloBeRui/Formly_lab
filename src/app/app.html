@@ -1,20 +1,78 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Formly Lab</a>
-    <div class="navbar-nav">
-      <a class="nav-link" routerLink="/form-example" routerLinkActive="active">Initial</a>
-      <a class="nav-link" routerLink="/layout-example" routerLinkActive="active">Layout</a>
+    <!-- Boton hamburguesa visible en movil para abrir/cerrar la navegacion. -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-controls="mainNavigation"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Menu principal: en movil se muestra como panel flotante sobre el contenido. -->
+    <div
+      id="mainNavigation"
+      class="navbar-nav mobile-nav"
+      [class.mobile-nav-open]="isMobileMenuOpen"
+    >
+      <a
+        class="nav-link"
+        routerLink="/form-example"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+        >Initial</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/layout-example"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+        >Layout</a
+      >
 
-      <a class="nav-link" routerLink="/reactive-example" routerLinkActive="active">Reactive</a>
-      <a class="nav-link" routerLink="/date-and-validation" routerLinkActive="active"
+      <a
+        class="nav-link"
+        routerLink="/reactive-example"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+        >Reactive</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/date-and-validation"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
         >Date and Validation</a
       >
-      <a class="nav-link" routerLink="/repeat-section" routerLinkActive="active">Repeat</a>
-      <a class="nav-link" routerLink="/json-schema" routerLinkActive="active">JSON Schema</a>
-      <a class="nav-link" routerLink="/custom-elements" routerLinkActive="active"
+      <a
+        class="nav-link"
+        routerLink="/repeat-section"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+        >Repeat</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/json-schema"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+        >JSON Schema</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/custom-elements"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
         >Custom Elements</a
       >
-      <a class="nav-link" routerLink="/global-extension" routerLinkActive="active"
+      <a
+        class="nav-link"
+        routerLink="/global-extension"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
         >Global Extensions</a
       >
     </div>
