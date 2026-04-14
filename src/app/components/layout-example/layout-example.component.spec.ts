@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayoutExampleComponent } from './layout-example-component';
+import { LayoutExampleComponent } from './layout-example.component';
 
 describe('LayoutExampleComponent', () => {
   let component: LayoutExampleComponent;
@@ -21,3 +21,4 @@ describe('LayoutExampleComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

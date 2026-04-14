@@ -7,7 +7,7 @@ import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/co
   selector: 'app-custom-elements',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormlyForm],
-  templateUrl: './custom-elements-component.html',
+  templateUrl: './custom-elements.component.html',
 })
 export class CustomElementsComponent {
   public form = new FormGroup({});
@@ -70,3 +70,4 @@ export class CustomElementsComponent {
  *
  * * Esto permite COMPONER interfaces complejas usando piezas pequeñas y reutilizables.
  */
+

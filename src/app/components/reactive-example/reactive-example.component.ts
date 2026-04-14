@@ -6,8 +6,8 @@ import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/co
 @Component({
   selector: 'reactive-example',
   imports: [ReactiveFormsModule, FormlyForm, JsonPipe],
-  templateUrl: './reactive-example-component.html',
-  styleUrl: './reactive-example-component.scss',
+  templateUrl: './reactive-example.component.html',
+  styleUrl: './reactive-example.component.scss',
 })
 export class ReactiveExampleComponent {
   /** @param {FormBuilder} _fb - Servicio inyectado para la creación de formularios */
@@ -21,7 +21,7 @@ export class ReactiveExampleComponent {
   /** @param {FormlyFormOptions} options - Opciones de configuración de Formly */
   public options: FormlyFormOptions = {};
 
-  //! Aquí es donde entran las dos propiedades más potentes de Formly (explicadas en detalle en el bloque 5 layout-example-component):
+  //! Aquí es donde entran las dos propiedades más potentes de Formly (explicadas en detalle en el bloque 5 layout-example.component):
 
   //? hideExpression: Sirve para mostrar u ocultar campos dinámicamente.
 

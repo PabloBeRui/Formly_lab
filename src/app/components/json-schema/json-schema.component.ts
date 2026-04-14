@@ -5,10 +5,10 @@ import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/co
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 
 @Component({
-  selector: 'app-json-schema-component',
+  selector: 'app-json-schema',
   imports: [CommonModule, ReactiveFormsModule, FormlyForm],
-  templateUrl: './json-schema-component.html',
-  styleUrl: './json-schema-component.scss',
+  templateUrl: './json-schema.component.html',
+  styleUrl: './json-schema.component.scss',
 })
 export class JsonSchemaComponent {
   //? servicio es el motor que lee el JSON estándar (Schema)

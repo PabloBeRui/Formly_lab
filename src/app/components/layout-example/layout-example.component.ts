@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 @Component({
-  selector: 'layout-example-component',
+  selector: 'app-layout-example',
   imports: [ReactiveFormsModule, FormlyForm, JsonPipe],
-  templateUrl: './layout-example-component.html',
-  styleUrl: './layout-example-component.scss',
+  templateUrl: './layout-example.component.html',
+  styleUrl: './layout-example.component.scss',
 })
 export class LayoutExampleComponent {
   /** @param {FormBuilder} _fb - Servicio inyectado para la creación de formularios */

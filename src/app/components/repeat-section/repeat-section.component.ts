@@ -4,12 +4,28 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@a
 import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 @Component({
-  selector: 'date-and-validation-component',
+  selector: 'app-repeat-section',
   imports: [ReactiveFormsModule, FormlyForm, JsonPipe],
-  templateUrl: './date-and-validation-component.html',
-  styleUrl: './date-and-validation-component.scss',
+  templateUrl: './repeat-section.component.html',
+  styleUrl: './repeat-section.component.scss',
 })
-export class DateAndValidationComponent {
+
+//! IMPORTANTE:
+//?  Este componente es un ejemplo de cómo gestionar secciones repetibles (arrays) en Formly. Sin embargo, para que funcione correctamente, suele ser necesario crear un "Custom Type" que extienda de FieldArrayType y defina la UI de los botones de añadir/eliminar. En este laboratorio, se usa la estructura estándar de Formly, pero ten en cuenta que el campo "investments" no mostrará nada en pantalla a menos que hayas configurado previamente el tipo 'repeat' con un componente personalizado.
+/** * ! NOTA DE ARQUITECTURA: El "misterio" del campo vacío.
+ * * ? ¿Por qué no aparece nada en pantalla si el JSON parece correcto?
+ * Formly es un motor de lógica, no una librería de componentes visuales completa.
+ * Proporciona el "cerebro" (propiedad fieldArray) para gestionar arrays en el modelo,
+ * pero NO proporciona el "cuerpo" (botones de añadir/eliminar) por defecto.
+ * * ? ¿Cuál es la solución?
+ * Debemos crear un "Custom Type". Formly permite definir un componente propio
+ * (que extienda de FieldArrayType) donde nosotros decidimos cómo se dibujan
+ * los botones y cómo se itera la lista.
+ * * ? Pasos para que este componente funcione:
+ * 1. Crear 'RepeatTypeComponent' (el envoltorio con botones + y -).
+ * 2. Registrarlo en la configuración global (app.config.ts) con el nombre 'repeat'.
+ */
+export class RepeatSectionComponent {
   /** @param {FormBuilder} _fb - Servicio inyectado para la creación de formularios */
   private _fb = inject(FormBuilder);
 
@@ -21,105 +37,43 @@ export class DateAndValidationComponent {
   /** @param {FormlyFormOptions} options - Opciones de configuración de Formly */
   public options: FormlyFormOptions = {};
 
-  /** @param {FormlyFieldConfig[]} fields - Diccionario Maestro de Fechas y Periodos */
+  /** @param {FormlyFieldConfig[]} fields - Diccionario de Secciones Repetibles */
   public fields: FormlyFieldConfig[] = [
     {
-      key: 'birthDate',
-      type: 'input',
+      key: 'investments', //? El nombre de la propiedad en el modelo será un array []
+      type: 'repeat', // ? ¡OJO! requiere un componente custom.
+
       props: {
-        type: 'date', // Renderiza el selector de fecha nativo del navegador
-        label: 'Fecha de Nacimiento',
-        required: true,
-        description: 'Debes ser mayor de 18 años para registrarte',
+        addText: 'Añadir Inversión',
+        label: 'Mis Inversiones',
       },
-      validators: {
-        //?  Validación de edad
-        majorAge: {
-          expression: (control: any) => {
-            if (!control.value) return true;
-            const birth = new Date(control.value);
-            const today = new Date();
-            const age = today.getFullYear() - birth.getFullYear();
-            return age >= 18;
+      fieldArray: {
+        fieldGroupClassName: 'row align-items-center',
+        fieldGroup: [
+          {
+            className: 'col-md-5',
+            type: 'input',
+            key: 'investmentName',
+            props: {
+              label: 'Nombre:',
+              required: true,
+              placeholder: 'Ej: Acciones Apple',
+            },
           },
-          message: 'Debes tener al menos 18 años',
-        },
-      },
-    },
-    { template: '<hr /><h5>Reserva de Estancia</h5>' },
-    {
-      fieldGroupClassName: 'row',
-      validators: {
-        // ? Validación cruzada de periodos
-        dateRange: {
-          expression: (control: any) => {
-            const { startDate, endDate } = control.value;
-            if (!startDate || !endDate) return true;
-            return new Date(endDate) >= new Date(startDate);
+          {
+            className: 'col-md-5',
+            type: 'input',
+            key: 'amount',
+            props: {
+              type: 'number',
+              label: 'Cantidad ($):',
+              required: true,
+              min: 1,
+            },
           },
-          message: 'La fecha de salida no puede ser anterior a la de entrada',
-          errorPath: 'endDate', // Marcamos el error en el segundo campo
-        },
-      },
-      fieldGroup: [
-        {
-          className: 'col-6',
-          key: 'startDate',
-          type: 'input',
-          props: {
-            type: 'date',
-            label: 'Fecha de Entrada',
-            required: true,
-          },
-        },
-        {
-          className: 'col-6',
-          key: 'endDate',
-          type: 'input',
-          props: {
-            type: 'date',
-            label: 'Fecha de Salida',
-            required: true,
-          },
-        },
-      ],
-    },
-    {
-      key: 'appointment',
-      type: 'input',
-      props: {
-        type: 'datetime-local',
-        label: 'Cita con el consultor',
-        description: 'Horario disponible de 09:00 a 18:00',
-      },
-      expressionProperties: {
-        // ? Manipulación de estilos según hora
-        'props.attributes': (model) => {
-          //1. Convierte string del input a un objeto Date
-          const date = model.appointment ? new Date(model.appointment) : null;
-          // 2. Verifica si fecha existe y si la hora está fuera del rango
-          if (date && (date.getHours() < 9 || date.getHours() > 18)) {
-            // 3. Si antes 9am o después 6pm,
-            // devuelve un objeto que Formly aplicará como atributo
-            return {
-              style: 'border: 2px solid orange;',
-            };
-          }
-          // 4. Si ok, devuelve  objeto vacío sin estilos
-          return {};
-        },
-      },
-      validators: {
-        businessHours: {
-          expression: (control: any) => {
-            if (!control.value) return true;
-            const date = new Date(control.value);
-            const actualDate = new Date();
-            if (date < actualDate) return false; // No permite fechas pasadas
-            return date.getHours() >= 9 && date.getHours() <= 18;
-          },
-          message: 'Hora no disponible. El horario de atención es de 09:00 a 18:00.',
-        },
+          // En un repeat real, aquí suele ir un botón de "Eliminar"
+          // gestionado por el componente que extiende de FieldArrayType
+        ],
       },
     },
   ];

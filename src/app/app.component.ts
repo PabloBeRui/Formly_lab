@@ -4,10 +4,10 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterModule],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
-export class App {
+export class AppComponent {
   /** Controla si el menu movil esta abierto o cerrado. */
   protected isMobileMenuOpen = false;
 

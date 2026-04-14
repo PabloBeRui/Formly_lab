@@ -4,13 +4,13 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@a
 import { FormlyForm, FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 @Component({
-  selector: 'form-example',
+  selector: 'app-form-example',
   standalone: true,
   imports: [ReactiveFormsModule, FormlyForm, JsonPipe],
-  templateUrl: './form-example.html',
-  styleUrl: './form-example.scss',
+  templateUrl: './form-example.component.html',
+  styleUrl: './form-example.component.scss',
 })
-export class FormExample {
+export class FormExampleComponent {
   /** @param {FormBuilder} _fb - Servicio inyectado para la creación de formularios */
   private _fb = inject(FormBuilder);
 

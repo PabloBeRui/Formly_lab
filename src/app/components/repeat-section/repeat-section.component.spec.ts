@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RepeatTypeComponent } from './repeat-type-component';
+import { RepeatSectionComponent } from './repeat-section.component';
 
-describe('RepeatTypeComponent', () => {
-  let component: RepeatTypeComponent;
-  let fixture: ComponentFixture<RepeatTypeComponent>;
+describe('RepeatSectionComponent', () => {
+  let component: RepeatSectionComponent;
+  let fixture: ComponentFixture<RepeatSectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RepeatTypeComponent]
+      imports: [RepeatSectionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RepeatTypeComponent);
+    fixture = TestBed.createComponent(RepeatSectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,3 +21,4 @@ describe('RepeatTypeComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

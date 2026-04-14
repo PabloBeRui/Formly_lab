@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateAndValidationComponent } from './date-and-validation-component';
+import { DateAndValidationComponent } from './date-and-validation.component';
 
 describe('DateAndValidationComponent', () => {
   let component: DateAndValidationComponent;
@@ -21,3 +21,4 @@ describe('DateAndValidationComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

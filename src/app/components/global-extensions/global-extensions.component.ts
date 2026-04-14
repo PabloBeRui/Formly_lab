@@ -7,8 +7,8 @@ import { FormlyForm, FormlyFieldConfig } from '@ngx-formly/core';
   selector: 'app-global-extensions',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormlyForm],
-  templateUrl: './global-extensions-component.html',
-  styleUrls: ['./global-extensions-component.scss'],
+  templateUrl: './global-extensions.component.html',
+  styleUrls: ['./global-extensions.component.scss'],
 })
 export class GlobalExtensionsComponent {
   public form = new FormGroup({});
@@ -43,3 +43,4 @@ export class GlobalExtensionsComponent {
     },
   ];
 }
+

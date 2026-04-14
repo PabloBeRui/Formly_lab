@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GlobalExtensionsComponent } from './global-extensions-component';
+import { GlobalExtensionsComponent } from './global-extensions.component';
 
 describe('GlobalExtensionsComponent', () => {
   let component: GlobalExtensionsComponent;
@@ -21,3 +21,4 @@ describe('GlobalExtensionsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

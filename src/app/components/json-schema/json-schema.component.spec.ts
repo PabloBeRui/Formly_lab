@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReactiveExampleComponent } from './reactive-example-component';
+import { JsonSchemaComponent } from './json-schema.component';
 
-describe('ReactiveExampleComponent', () => {
-  let component: ReactiveExampleComponent;
-  let fixture: ComponentFixture<ReactiveExampleComponent>;
+describe('JsonSchemaComponent', () => {
+  let component: JsonSchemaComponent;
+  let fixture: ComponentFixture<JsonSchemaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveExampleComponent]
+      imports: [JsonSchemaComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReactiveExampleComponent);
+    fixture = TestBed.createComponent(JsonSchemaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,3 +21,4 @@ describe('ReactiveExampleComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

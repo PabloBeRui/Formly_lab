@@ -8,7 +8,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideFormlyCore } from '@ngx-formly/core';
-import { RepeatTypeComponent } from './shared/formly-types/repeat-type-component/repeat-type-component';
+import { RepeatTypeComponent } from './shared/formly-types/repeat-type/repeat-type.component';
 import { PanelWrapperComponent } from './shared/formly-wrappers/panel-wrapper.component/panel-wrapper.component';
 import { DarkWrapperComponent } from './shared/formly-wrappers/dark-wrapper.component/dark-wrapper.component';
 
@@ -47,3 +47,4 @@ export const appConfig: ApplicationConfig = {
     ]),
   ],
 };
+

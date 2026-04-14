@@ -162,15 +162,15 @@ npm test
 src/app/
 	components/
 		form-example/
-		layout-example-component/
-		reactive-example-component/
-		date-and-validation-component/
-		repeat-section-component/
-		json-schema-component/
-		custom-element-component/
-		global-extensions-component/
+		layout-example/
+		reactive-example/
+		date-and-validation/
+		repeat-section/
+		json-schema/
+		custom-elements/
+		global-extensions/
 	shared/
-		formly-types/repeat-type-component/
+		formly-types/repeat-type/
 		formly-wrappers/panel-wrapper.component/
 		formly-wrappers/dark-wrapper.component/
 		formly-extensions/example-extension.ts

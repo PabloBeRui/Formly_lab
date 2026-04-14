@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { FieldArrayType, FormlyModule } from '@ngx-formly/core';
 
 @Component({
-  selector: 'repeat-type-component',
+  selector: 'app-repeat-type',
   imports: [CommonModule, FormlyModule],
-  templateUrl: './repeat-type-component.html',
-  styleUrl: './repeat-type-component.scss',
+  templateUrl: './repeat-type.component.html',
+  styleUrl: './repeat-type.component.scss',
 })
 export class RepeatTypeComponent extends FieldArrayType {
   /**
@@ -31,4 +31,3 @@ export class RepeatTypeComponent extends FieldArrayType {
    * ? para saber qué HTML renderizar cuando encuentra ese tipo en el JSON.
    */
 }
-
