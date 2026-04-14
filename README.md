@@ -1,59 +1,189 @@
-# LearningFormly
+# Advanced Angular Formly Lab
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.23.
+A comprehensive technical guide and sandbox for building dynamic, schema-driven forms in Angular with Formly.
 
-## Development server
+## ES - Descripcion rapida
 
-To start a local development server, run:
+Este repositorio es un laboratorio practico para aprender y demostrar Formly en escenarios reales:
 
-```bash
-ng serve
+- Formularios dinamicos basados en configuracion.
+- Validaciones de campo y validaciones cruzadas.
+- Layout responsive con Bootstrap.
+- Secciones repetibles (arrays) mediante custom type.
+- Wrappers personalizados y wrappers anidados.
+- Integracion con JSON Schema.
+- Extensiones globales para mutar campos en tiempo de ejecucion.
+
+Tu descripcion para GitHub esta bien orientada y encaja con el contenido actual del proyecto.
+
+## EN - Quick Description
+
+This repository is a hands-on lab to learn and showcase Formly in practical scenarios:
+
+- Dynamic configuration-driven forms.
+- Field-level and cross-field validation.
+- Bootstrap responsive layout techniques.
+- Repeatable sections (arrays) via custom type.
+- Custom and nested wrappers.
+- JSON Schema to Formly integration.
+- Global extensions that mutate field behavior at runtime.
+
+Your GitHub description is accurate and fits the current implementation.
+
+---
+
+## ES - Que incluye la app
+
+### Rutas de demo
+
+| Ruta                 | Objetivo principal                                                |
+| -------------------- | ----------------------------------------------------------------- |
+| /form-example        | Campos base, validaciones, mensajes personalizados                |
+| /layout-example      | Grid, fieldGroup, className, hideExpression, expressionProperties |
+| /reactive-example    | Logica reactiva y validaciones cruzadas                           |
+| /date-and-validation | Fechas, rangos y reglas de negocio por horario                    |
+| /repeat-section      | Arrays dinamicos con type repeat                                  |
+| /json-schema         | Generacion de campos desde JSON Schema                            |
+| /custom-elements     | Wrappers panel/dark y composicion visual                          |
+| /global-extension    | Demostracion de extension global (prePopulate)                    |
+
+### Arquitectura visual
+
+```mermaid
+flowchart LR
+	A[Angular App] --> B[Routing Demos]
+	B --> C[Formly Core + Bootstrap]
+	C --> D[Built-in Types]
+	C --> E[Custom Type: repeat]
+	C --> F[Wrappers: panel, dark]
+	C --> G[Global Extension]
+	C --> H[JSON Schema Adapter]
+	E --> I[Repeat UI add/remove]
+	H --> J[Schema -> FormlyFieldConfig]
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## EN - What the app contains
 
-## Code scaffolding
+### Demo routes
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Route                | Main purpose                                                      |
+| -------------------- | ----------------------------------------------------------------- |
+| /form-example        | Core fields, validation, custom messages                          |
+| /layout-example      | Grid, fieldGroup, className, hideExpression, expressionProperties |
+| /reactive-example    | Reactive logic and cross-field validation                         |
+| /date-and-validation | Date ranges and business-hour rules                               |
+| /repeat-section      | Dynamic arrays with custom repeat type                            |
+| /json-schema         | Form generation from JSON Schema                                  |
+| /custom-elements     | panel/dark wrappers and nested composition                        |
+| /global-extension    | Global prePopulate extension demo                                 |
+
+---
+
+## Stack
+
+- Angular 20
+- @ngx-formly/core 7
+- @ngx-formly/bootstrap 7
+- RxJS 7
+- SCSS + Bootstrap
+- Jasmine + Karma
+
+## ES - Recomendacion de VS Code
+
+Para mejorar la lectura de los comentarios anotados por color en este laboratorio, se recomienda instalar:
+
+- Better Comments (ID: aaron-bond.better-comments)
+
+Esta extension resalta prefijos como !, ?, TODO o NOTE con distintos colores, haciendo mas clara la documentacion inline del codigo.
+
+## EN - VS Code Recommendation
+
+To improve readability of color-annotated comments in this lab, it is recommended to install:
+
+- Better Comments (ID: aaron-bond.better-comments)
+
+This extension highlights prefixes like !, ?, TODO, or NOTE with different colors, making inline code documentation easier to scan.
+
+## ES - Arranque rapido
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Abre http://localhost:4200
+
+Comandos utiles:
 
 ```bash
-ng generate --help
+npm run build
+npm test
 ```
 
-## Building
-
-To build the project run:
+## EN - Quick Start
 
 ```bash
-ng build
+npm install
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open http://localhost:4200
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Useful commands:
 
 ```bash
-ng test
+npm run build
+npm test
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## ES - Puntos tecnicos clave
 
-```bash
-ng e2e
+- Configuracion global de Formly en app.config.ts.
+- Registro de type personalizado repeat para arrays dinamicos.
+- Registro de wrappers panel y dark para encapsular presentacion.
+- Mensajes globales de validacion centralizados.
+- Extension global disponible en example-extension.ts (actualmente comentada en app.config.ts).
+
+## EN - Key Technical Points
+
+- Centralized Formly configuration in app.config.ts.
+- Custom repeat type registration for dynamic arrays.
+- panel and dark wrapper registration for UI composition.
+- Global validation messages.
+- Global extension available in example-extension.ts (currently commented out in app.config.ts).
+
+---
+
+## Estructura principal
+
+```text
+src/app/
+	components/
+		form-example/
+		layout-example-component/
+		reactive-example-component/
+		date-and-validation-component/
+		repeat-section-component/
+		json-schema-component/
+		custom-element-component/
+		global-extensions-component/
+	shared/
+		formly-types/repeat-type-component/
+		formly-wrappers/panel-wrapper.component/
+		formly-wrappers/dark-wrapper.component/
+		formly-extensions/example-extension.ts
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## ES - Para quien es este repo
 
-## Additional Resources
+- Equipos que quieran estandarizar formularios dinamicos en Angular.
+- Devs que necesiten combinar JSON Schema con UX personalizada.
+- Formacion interna sobre Formly avanzado (types, wrappers, extensiones).
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## EN - Who this repo is for
+
+- Teams standardizing dynamic forms in Angular.
+- Developers combining JSON Schema with custom UX.
+- Internal training on advanced Formly patterns (types, wrappers, extensions).
