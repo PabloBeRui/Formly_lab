@@ -6,6 +6,7 @@ import { DateAndValidationComponent } from './components/date-and-validation-com
 import { RepeatSectionComponent } from './components/repeat-section-component/repeat-section-component';
 import { JsonSchemaComponent } from './components/json-schema-component/json-schema-component';
 import { CustomElementsComponent } from './components/custom-element-component/custom-elements-component';
+import { GlobalExtensionsComponent } from './components/global-extensions-component/global-extensions-component';
 
 export const routes: Routes = [
   { path: 'form-example', component: FormExample },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'repeat-section', component: RepeatSectionComponent },
   { path: 'json-schema', component: JsonSchemaComponent },
   { path: 'custom-elements', component: CustomElementsComponent },
+  { path: 'global-extension', component: GlobalExtensionsComponent },
 
   { path: '', redirectTo: '/form-example', pathMatch: 'full' },
   { path: '**', redirectTo: '/form-example', pathMatch: 'full' },

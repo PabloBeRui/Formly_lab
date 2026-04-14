@@ -12,6 +12,8 @@ import { RepeatTypeComponent } from './shared/formly-types/repeat-type-component
 import { PanelWrapperComponent } from './shared/formly-wrappers/panel-wrapper.component/panel-wrapper.component';
 import { DarkWrapperComponent } from './shared/formly-wrappers/dark-wrapper.component/dark-wrapper.component';
 
+import { exampleExtension } from './shared/formly-extensions/example-extension';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -33,6 +35,8 @@ export const appConfig: ApplicationConfig = {
           { name: 'panel', component: PanelWrapperComponent },
           { name: 'dark', component: DarkWrapperComponent },
         ],
+        //? Registro de la lógica de extensión global (se ejecuta para cada campo)
+        extensions: [{ name: 'example', extension: exampleExtension }],
         // Mensajes de validación globales (se pueden sobreescribir a nivel de campo)
         validationMessages: [
           { name: 'required', message: 'Este campo es obligatorio' },

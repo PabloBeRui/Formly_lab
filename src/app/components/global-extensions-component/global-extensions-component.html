@@ -1,0 +1,38 @@
+<section class="form-container">
+  <h2 class="form-container__title">Global Extensions (Automatización)</h2>
+
+  <div class="alert alert-info shadow-sm mb-4">
+    <i class="bi bi-info-circle-fill me-2"></i>
+    <strong>Nota:</strong> En este JSON no hay clases de CSS, no hay Badges HTML, ni mensajes de error personalizados. Todo lo que ves es inyectado por la <code>exampleExtension</code>.
+    <br />
+    <small>
+      <strong>Importante:</strong> Si no ves cambios (bordes rojos o fondo amarillo), asegúrate de
+      descomentar la línea <code>extensions: [...]</code> en tu archivo <code>app.config.ts</code>.
+    </small>
+
+    <hr>
+    <strong>Observarás:</strong>
+    <ul class="mb-0 mt-2">
+      <li><strong>Mutación de Labels:</strong> El sufijo <span class="text-danger fw-bold">"(extension)"</span> se inyecta en los campos requeridos.</li>
+      <li><strong>Ayuda Dinámica:</strong> Descripción extra: <span class="text-danger fw-bold">"Campo obligatorio extension"</span>.</li>
+      <li><strong>Detección de Tipo:</strong> El <code>input</code> se vuelve <span class="bg-warning px-1">amarillo</span> y el <code>checkbox</code> resalta en <span class="text-danger fw-bold">rojo</span>.</li>
+      <li><strong>Bordes Globales:</strong> Un <span class="border border-danger px-1">borde rojo</span> envuelve a todo elemento <code>required</code>.</li>
+    </ul>
+
+    <div class="mt-3 p-2 bg-light border-start border-primary border-4">
+      <small class="text-dark">
+        <strong>⚡ Alcance Global:</strong> Esta extensión actúa como un "interceptor" de Formly. Debido a que está registrada en el <code>app.config</code>,
+        <strong>afectará a todos los componentes de la aplicación</strong> que usen Formly, asegurando una coherencia visual absoluta en todo el proyecto.
+      </small>
+    </div>
+  </div>
+
+  <form [formGroup]="form">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+  </form>
+
+  <div class="model-inspector mt-4">
+    <h3 class="model-inspector__title">Estado del modelo</h3>
+    <pre class="model-inspector__data">{{ model | json }}</pre>
+  </div>
+</section>
