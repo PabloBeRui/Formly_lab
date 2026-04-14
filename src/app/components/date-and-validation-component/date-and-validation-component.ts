@@ -88,7 +88,7 @@ export class DateAndValidationComponent {
       key: 'appointment',
       type: 'input',
       props: {
-        type: 'datetime-local', // Permite elegir fecha Y hora
+        type: 'datetime-local', 
         label: 'Cita con el consultor',
         description: 'Horario disponible de 09:00 a 18:00',
       },
@@ -144,10 +144,11 @@ export class DateAndValidationComponent {
 
     console.log('Datos enviados:', data);
 
-    /**!
-     * Para resetear el formulario a su valor inicial en Formly:
-     * 1. Usamos this.form.reset() para limpiar el estado de Angular (validaciones/touched).
-     * 2. Reasignamos el modelo a su estado original para que Formly actualice los inputs.
+    /**
+     * Para vaciar el formulario tras un envio valido:
+     * 1. Reasignamos el modelo a un objeto vacio.
+     * 2. Ejecutamos resetModel para limpiar modelo y estado interno de Formly.
+     * 3. Reiniciamos parentForm para limpiar el estado submitted del formulario padre.
      */
     const emptyModel = {};
     this.model = emptyModel;

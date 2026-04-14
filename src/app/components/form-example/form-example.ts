@@ -18,7 +18,8 @@ export class FormExample {
   public form: FormGroup = this._fb.group({});
 
   /** @param {any} model - Modelo de datos que vincula Formly */
-  public model: any = { name: 'Pedro' };
+  public model: any = { username: 'Pedro' };
+
   /** @param {FormlyFormOptions} options - Opciones de configuración de Formly */
   public options: FormlyFormOptions = {};
 
@@ -105,10 +106,8 @@ export class FormExample {
       key: 'terms',
       type: 'checkbox',
       props: {
-        // En checkbox, la label suele ir al lado del cuadro
         label: 'Acepto la política de privacidad',
         // required: true, // no se usa, se hace una validacion personalizada
-        // pattern: 'true', // Truco para obligar a que el checkbox sea true para ser válido
       },
       validators: {
         //? IMPORTANTE: En checkboxes, 'required' no basta porque 'false' cuenta como valor.
@@ -134,16 +133,17 @@ export class FormExample {
        * automáticamente los mensajes de error en la UI.
        */
       this.form.markAllAsTouched();
-      console.warn('Formulario inválido, revisa los errores.');
+      console.log('Formulario inválido, revisa errores.');
       return;
     }
 
     console.log('Datos enviados:', data);
 
-    /**!
-     * Para resetear el formulario a su valor inicial en Formly:
-     * 1. Usamos this.form.reset() para limpiar el estado de Angular (validaciones/touched).
-     * 2. Reasignamos el modelo a su estado original para que Formly actualice los inputs.
+    /**
+     * Para vaciar el formulario tras un envío válido:
+     * 1. Reasignamos el modelo a un objeto vacío.
+     * 2. Ejecutamos resetModel para limpiar modelo y estado interno de Formly.
+     * 3. Reiniciamos parentForm para limpiar el estado submitted del formulario padre.
      */
     const emptyModel = {};
     this.model = emptyModel;
