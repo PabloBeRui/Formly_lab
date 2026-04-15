@@ -8,6 +8,7 @@ Este repositorio es un laboratorio practico para aprender y demostrar Formly en 
 
 - Formularios dinamicos basados en configuracion.
 - Validaciones de campo y validaciones cruzadas.
+- Datos asincronos con selects dependientes y validaciones remotas.
 - Layout responsive con Bootstrap.
 - Secciones repetibles (arrays) mediante custom type.
 - Wrappers personalizados y wrappers anidados.
@@ -46,6 +47,8 @@ Your GitHub description is accurate and fits the current implementation.
 | /json-schema         | Generacion de campos desde JSON Schema                            |
 | /custom-elements     | Wrappers panel/dark y composicion visual                          |
 | /global-extension    | Demostracion de extension global (prePopulate)                    |
+| /global-validation   | Mensajes de validacion globales y reutilizables                   |
+| /async-data          | Selects asíncronos dependientes y validacion remota               |
 
 ### Arquitectura visual
 
@@ -76,6 +79,8 @@ flowchart LR
 | /json-schema         | Form generation from JSON Schema                                  |
 | /custom-elements     | panel/dark wrappers and nested composition                        |
 | /global-extension    | Global prePopulate extension demo                                 |
+| /global-validation   | Reusable global validation messages                               |
+| /async-data          | Async dependent selects and remote validation                     |
 
 ---
 
@@ -145,6 +150,9 @@ npm test
 - Registro de wrappers panel y dark para encapsular presentacion.
 - Mensajes globales de validacion centralizados.
 - Extension global disponible en example-extension.ts (actualmente comentada en app.config.ts).
+- Demo de datos asincronos con observables directos en options y validaciones async en campo.
+- Selects dependientes con reset del campo hijo cuando cambia el padre.
+- Validacion remota por clave de error usando asyncValidators + expression.
 
 ## EN - Key Technical Points
 
@@ -152,7 +160,11 @@ npm test
 - Custom repeat type registration for dynamic arrays.
 - panel and dark wrapper registration for UI composition.
 - Global validation messages.
+- Global validation component with reusable centralized messages.
 - Global extension available in example-extension.ts (currently commented out in app.config.ts).
+- Async dependent selects wired directly through observables in field options.
+- Child field reset when the parent select changes.
+- Remote validation mapped through asyncValidators + expression.
 
 ---
 
@@ -169,6 +181,8 @@ src/app/
 		json-schema/
 		custom-elements/
 		global-extensions/
+		global-validation/
+		async-data/
 	shared/
 		formly-types/repeat-type/
 		formly-wrappers/panel-wrapper.component/

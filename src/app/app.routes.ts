@@ -8,6 +8,7 @@ import { JsonSchemaComponent } from './components/json-schema/json-schema.compon
 import { CustomElementsComponent } from './components/custom-elements/custom-elements.component';
 import { GlobalExtensionsComponent } from './components/global-extensions/global-extensions.component';
 import { AsyncDataComponent } from './components/async-data/async-data.component';
+import { GlobalValidation } from './components/global-validation/global-validation';
 
 export const routes: Routes = [
   { path: 'form-example', component: FormExampleComponent },
@@ -21,6 +22,10 @@ export const routes: Routes = [
   {
     path: 'async-data',
     component: AsyncDataComponent,
+  },
+  {
+    path: 'global-validation',
+    component: GlobalValidation,
   },
 
   { path: '', redirectTo: '/form-example', pathMatch: 'full' },
