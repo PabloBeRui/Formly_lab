@@ -159,3 +159,12 @@ export class ReactiveExampleComponent {
 // resetModel(): Es un método exclusivo de Formly (dentro de FormlyFormOptions). Su función es devolver el modelo a su estado inicial y, muy importante, resetear los validadores internos de Formly para que no "griten" (se pongan rojos) al vaciarse.
 
 // resetForm(): En realidad, este método suele venir del FormGroupDirective de Angular o de cómo Formly se integra con el formulario nativo. Al llamarlo a través de parentForm, estás limpiando el estado de "enviado" (submitted) del formulario. Si no limpias el estado submitted, los errores seguirán apareciendo aunque el campo sea untouched.
+
+//! Diferencia (Evolutiva)
+//? expressionProperties:
+// Es el nombre clásico / antiguo.Se usaba en Formly v5 y v6.
+
+// ?  expressions:
+//  Es el nombre moderno / simplificado introducido a partir de Formly v6 / v7 para ser más conciso.
+
+//* Dato clave: En las versiones actuales, Formly acepta ambos por compatibilidad, pero la documentación oficial ahora prioriza expressions porque es más corto de escribir.

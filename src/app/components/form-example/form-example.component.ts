@@ -169,22 +169,33 @@ export class FormExampleComponent {
 
 // Paso D: Formly mira el model. Si ve { name: 'Pedro' }, automáticamente pone "Pedro" dentro del input que tiene la key: 'name'.
 
-//? Segund documentacion
+// =========================================================================
+// 🎯 DIFERENCIA CLAVE: CONTROL vs MODELO
+// =========================================================================
 
-//  form = new FormGroup({});
-//   model = { email: 'email@gmail.com' };
-//   fields: FormlyFieldConfig[] = [
-//     {
-//       key: 'email',
-//       type: 'input',
-//       props: {
-//         label: 'Email address',
-//         placeholder: 'Enter email',
-//         required: true,
-//       },
-//     },
-//   ];
+/**
+ * 1. EL MODELO (The Model / Data)
+ * ? Es un OBJETO plano de JavaScript { country: 'es' }.
+ * ? Representa el "QUÉ": los datos puros que enviarás al servidor.
+ * ? No sabe nada de validaciones, si el input está sucio (dirty) o si tiene foco.
+ */
+// console.log(this.model); // Muestra: { country: 'es', province: 'md' }
 
-//   onSubmit(model:any) {
-//     console.log(model);
-//   }
+/**
+ * 2. EL CONTROL (FormControl / Logic)
+ * ? Es una CLASE de Angular (FormControl).
+ * ? Representa el "CÓMO": el estado administrativo del input.
+ * ? Contiene:
+ * - .value: El valor actual (igual que en el modelo).
+ * - .valid / .invalid: ¿Cumple las reglas?
+ * - .statusChanges / .valueChanges: Observables para escuchar cambios.
+ * - .pristine / .dirty: ¿El usuario ha tocado ya el campo?
+ * - .errors: Si está mal, ¿por qué? (ej: { required: true }).
+ */
+// console.log(field.formControl); // Muestra una instancia con estados y metadatos.
+
+/**
+ * 💡 EN RESUMEN:
+ * Si quieres enviar datos a la API, miras el MODEL.
+ * Si quieres reaccionar a cambios, validar o deshabilitar, usas el CONTROL.
+ */

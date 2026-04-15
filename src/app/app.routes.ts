@@ -7,6 +7,7 @@ import { RepeatSectionComponent } from './components/repeat-section/repeat-secti
 import { JsonSchemaComponent } from './components/json-schema/json-schema.component';
 import { CustomElementsComponent } from './components/custom-elements/custom-elements.component';
 import { GlobalExtensionsComponent } from './components/global-extensions/global-extensions.component';
+import { AsyncDataComponent } from './components/async-data/async-data.component';
 
 export const routes: Routes = [
   { path: 'form-example', component: FormExampleComponent },
@@ -17,6 +18,10 @@ export const routes: Routes = [
   { path: 'json-schema', component: JsonSchemaComponent },
   { path: 'custom-elements', component: CustomElementsComponent },
   { path: 'global-extension', component: GlobalExtensionsComponent },
+  {
+    path: 'async-data',
+    component: AsyncDataComponent,
+  },
 
   { path: '', redirectTo: '/form-example', pathMatch: 'full' },
   { path: '**', redirectTo: '/form-example', pathMatch: 'full' },
