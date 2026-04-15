@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
-import { of, startWith, switchMap, tap } from 'rxjs';
+import { map, of, startWith, switchMap, tap } from 'rxjs';
 
 import { Data } from '../../shared/services/data/data';
 
@@ -56,6 +56,43 @@ export class AsyncDataComponent {
       hooks: {
         //?  se llama a bindProvinceOptions para conectar este select con el de 'country'.
         onInit: (field) => this.bindProvinceOptions(field),
+      },
+    },
+    {
+      key: 'username',
+      type: 'input',
+      props: {
+        label: 'Nombre de Usuario',
+        placeholder: 'Escribe un nombre (prueba con "admin")...',
+        required: true,
+      },
+      asyncValidators: {
+        // ? TIP FORMLY: 'expression' simplifica la validación asíncrona.
+        //  A diferencia de Angular puro, aquí retornamos un booleano:
+        //  true = éxito (null en Angular) | false = error (objeto en Angular).
+        uniqueUsername: {
+          // ? En Formly v7, cuando usas 'asyncValidators' con 'expression',
+          // ? la expresión debe devolver true/false.
+          // ? true = válido, false = inválido.
+          // ? La clave del mensaje debe coincidir con el nombre del validador de Formly,
+          // ? no con la clave del objeto que devuelva el servicio.
+          expression: (control: any) => {
+            // ? Si no hay valor, deja pasar el validador asincrónico.
+            if (!control.value) return of(true);
+
+            // ? El servicio devuelve { usernameTaken: true } o null propio de angular form.
+            // ? Aquí solo convierte ese resultado a booleano para Formly.
+            //? si el servicio devolviese false en vez de null no haría falta el pipe para devolver el valor tal cual
+            return this._dataService.checkUsername(control.value).pipe(map((result) => !result));
+          },
+        },
+      },
+      validation: {
+        messages: {
+          required: 'Este campo es requerido.',
+          // ? El mensaje debe usar la clave del validador de Formly, no la del objeto del servicio.
+          uniqueUsername: '❌ Este nombre de usuario ya está en uso.',
+        },
       },
     },
   ];
@@ -156,7 +193,7 @@ export class AsyncDataComponent {
 // Diferencia con Angular: Mientras que los hooks de Angular (ngOnInit) controlan todo el componente, los de Formly te permiten inyectar lógica específica en un solo input del formulario sin afectar al resto.
 
 // =========================================================================
-// 💡 ¿POR QUÉ USAMOS 'MODEL' EN LAS EXPRESSIONS?
+// 💡 ¿POR QUÉ USAR 'MODEL' EN LAS EXPRESSIONS?
 // =========================================================================
 
 /**
@@ -190,3 +227,38 @@ export class AsyncDataComponent {
 
 // startWith:
 //  Es necesario porque valueChanges solo habla cuando hay un CAMBIO.Si se entra al formulario y ya hay un país puesto, no hay "cambio", por lo que el select de provincias se quedaría vacío.startWith le da un "empujón" inicial al flujo con el valor que tenga el país en ese momento.
+
+// =========================================================================
+//? NOTA EDUCATIVA: expression de Formly vs AsyncValidatorFn de Angular
+// =========================================================================
+
+// Con expression de Formly: true/false.
+// Con un async validator Angular estándar: { usernameTaken: true } o null.
+//
+// Conclusión:
+// Esta diferencia no es "Formly en general" en todos los casos de validación.
+// Aplica específicamente cuando usas este formato en Formly:
+// asyncValidators + expression.
+
+// =========================================================================
+//? 🚀 FORMLY ASYNC VALIDATORS: 'expression' vs ANGULAR NATIVO
+// =========================================================================
+
+/**
+ * Es vital entender que Formly v7 actúa como un traductor sobre Angular:
+ * * 1. EN ANGULAR NATIVO (AsyncValidatorFn):
+ * - Un validador devuelve un objeto { error: true } para fallar.
+ * - Un validador devuelve null para decir que es válido.
+ * * 2. EN FORMLY (Propiedad 'expression'):
+ * - Formly abstrae esto para que sea más intuitivo (tipo pregunta/respuesta).
+ * - ¿Es válido? -> return true.
+ * - ¿Es inválido? -> return false.
+ * * 🧠 ¿POR QUÉ ESTO ES PROPIO DE FORMLY?
+ * Porque al usar la clave 'expression', Formly intercepta el resultado.
+ * Si recibe 'false', él mismo se encarga de marcar el control como inválido
+ * y asociarle el mensaje de error definido en 'validation.messages' que
+ * coincida con el nombre del validador (en este caso, 'uniqueUsername').
+ *
+ * !NOTA: Esta simplificación booleana facilita la lógica rápida, pero nos obliga
+ * !a usar map() si nuestro servicio devuelve objetos de error estilo Angular.
+ */

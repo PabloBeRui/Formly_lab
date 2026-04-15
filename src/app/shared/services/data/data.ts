@@ -57,7 +57,25 @@ export class Data {
     const provinces = allProvinces[countryId] || [];
     return of(provinces).pipe(delay(1000));
   }
+
+  /**
+   * Simula una consulta a la base de datos para verificar disponibilidad.
+   * @param username Nombre a buscar.
+   * @returns Observable que emite null si está libre o un objeto de error si está ocupado.
+   */
+
+  checkUsername(username: string): Observable<any> {
+    const takeUsernames = ['admin', 'user', 'test'];
+    const isTaken = takeUsernames.includes(username.toLowerCase());
+
+    // Simula latencia
+    return of(isTaken ? { usernameTaken: true } : null).pipe(delay(1000));
+    
+  }
 }
+
+
+
 
 //? Formly es "Async-Aware"
 // Cuando asignamos un Observable directamente a la propiedad options de un campo, Formly utiliza internamente el Pipe Async o una lógica equivalente. Esto significa que Formly:
