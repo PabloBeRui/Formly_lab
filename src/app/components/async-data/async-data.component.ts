@@ -95,6 +95,43 @@ export class AsyncDataComponent {
         },
       },
     },
+    {
+      key: 'company_id',
+      type: 'input',
+      props: {
+        label: 'Identificación Fiscal (CIF)',
+        required: true,
+        placeholder: 'Prueba A123 (Lista negra) o D123 (Ya registrado)',
+      },
+      asyncValidators: {
+        // Validador 1: blackList?
+        cifBlacklist: {
+          expression: (control: any) => {
+            if (!control.value) return of(true);
+            return this._dataService
+              .checkBlackLIstCIF(control.value)
+              .pipe(map((result) => !result));
+          },
+        },
+        // Validador 2: está en el registro?
+        cifUnique: {
+          expression: (control: any) => {
+            if (!control.value) return of(true);
+            // Podríamos llamar a otro método del servicio
+            return this._dataService
+              .checkRegisteredCIF(control.value)
+              .pipe(map((result) => !result));
+          },
+        },
+      },
+      validation: {
+        messages: {
+          required: 'El CIF es obligatorio.',
+          cifBlacklist: '⚠️ Este CIF figura en la lista negra de morosidad.',
+          cifUnique: '❌ Este CIF ya está registrado en nuestra plataforma.',
+        },
+      },
+    },
   ];
 
   /**
@@ -140,13 +177,34 @@ export class AsyncDataComponent {
   }
 
   /**
-   * Gestiona el envío del formulario y limpia el estado interno de Formly.
-   * @param data Datos actuales del modelo.
+   * @description Maneja el envío del formulario.
+   * Valida todos los campos, muestra errores si los hay,
+   * y resetea al valor inicial si es válido.
+   * @param {any} data - Los datos actuales del modelo.
    */
-  public onSubmit(data: Record<string, unknown>): void {
-    console.log('Final Data:', data);
+  public onSubmit(data: any): void {
+    if (this.form.invalid) {
+      /** * Si el formulario es inválido, marcamos todos los controles como
+       * 'touched'. Formly detectará esto y mostrará
+       * automáticamente los mensajes de error en la UI.
+       */
+      this.form.markAllAsTouched();
+      console.log('Formulario inválido, revisa errores.');
+      return;
+    }
 
+    console.log('Datos enviados:', data);
+
+    /**
+     * Para limpiar el formulario tras un envío válido:
+     * 1. Ejecuta resetModel() para restablecer el modelo y el estado interno de Formly.
+     * 2. Ejecuta parentForm.resetForm() para limpiar el estado submitted del formulario padre.
+     */
+
+    // Limpia modelo + estado de Formly (pristine/untouched) y evita mostrar errores al volver vacío.
     this.options.resetModel?.();
+
+    // También resetea el estado `submitted` del formulario padre para que Formly no pinte errores.
     this.options.parentForm?.resetForm();
   }
 }

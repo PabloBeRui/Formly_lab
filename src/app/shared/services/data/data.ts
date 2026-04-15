@@ -58,6 +58,7 @@ export class Data {
     return of(provinces).pipe(delay(1000));
   }
 
+  //? Usado en field de username para validar si el nombre de usuario ya está en uso.
   /**
    * Simula una consulta a la base de datos para verificar disponibilidad.
    * @param username Nombre a buscar.
@@ -70,7 +71,39 @@ export class Data {
 
     // Simula latencia
     return of(isTaken ? { usernameTaken: true } : null).pipe(delay(1000));
-    
+
+    //si fuese un servicio exclusivo para formly
+    // return of(!isTaken)
+  }
+
+  //?field company_id
+
+  /**
+   * Verifica si un CIF está en la lista negra del sistema.
+   * @param cif Código de identificación fiscal a validar.
+   * @returns Observable que emite null si no existe o un objeto de error si ya está registrado.
+   */
+
+  checkBlackLIstCIF(cif: string): Observable<any> {
+    const blackListCIFs = ['A123', 'B123', 'C123'];
+    const isBlacklisted = blackListCIFs.includes(cif.toUpperCase());
+
+    // Simula latencia
+   return of(isBlacklisted ? { cifBlacklist: true } : null).pipe(delay(1000));
+  }
+
+  /**
+   * Verifica si un CIF ya existe en el sistema para evitar duplicados.
+   * @param cif Código de identificación fiscal a validar.
+   * @returns Observable que emite null si no existe o un objeto de error si ya está registrado.
+   */
+
+  checkRegisteredCIF(cif: string): Observable<any> {
+    const registeredCIFs = ['D123', 'E123', 'F123'];
+    const isRegistered = registeredCIFs.includes(cif.toUpperCase());
+
+    // Simula latencia
+    return of(isRegistered ? { cifUnique: true } : null).pipe(delay(1000));
   }
 }
 
