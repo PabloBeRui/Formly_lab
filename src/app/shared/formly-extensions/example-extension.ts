@@ -5,7 +5,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
  * Es un "Interceptor" que se ejecuta durante el ciclo de vida del campo.
  * Permite automatizar cambios en los campos sin tocarlos uno a uno en el JSON
  * Formly tiene 3 fases principales donde podemos actuar:
- ** 1. prePopulate: Antes de que el campo se configure (ideal para "hackear" props).
+ ** 1. prePopulate: Antes de que el campo se configure (ideal para "hackear" props).  ->ejemp. { label: 'Nombre' } a { label: 'Nombre (obligatorio)', description: 'Campo procesado' }
  ** 2. onPopulate: Cuando el campo ya tiene su configuración base.
  ** 3. postPopulate: Cuando el campo ya está totalmente listo para renderizarse.
  */
@@ -32,7 +32,7 @@ export const exampleExtension = {
 
     field.props.label = `${field.props.label} (extension)`;
     field.props.description = field.props.description
-      ? `${field.props.description} Campo obligatorio extension.` // SI YA TIENE descripción, concatena
+      ? `${field.props.description}  extension.` // SI YA TIENE descripción, concatena
       : 'Campo obligatorio extension.'; // SI NO TIENE, créala desde cero
 
     //! --- POSIBILIDAD B: Estilos Dinámicos (CSS) ---
@@ -49,8 +49,8 @@ export const exampleExtension = {
 
     //* B. Si el campo es un CHECKBOX
     if (field.type === 'checkbox') {
-      // En Bootstrap no hay un 'bg-orange', así que usamos estilos inline
-      // o una clase personalizada. Aquí inyectamos un color naranja suave.
+      //  estilos inline
+      // o una clase personalizada. Aquí inyecta rojo.
       field.props.attributes = {
         style: 'background-color: red; padding: 10px; border-radius: 5px; display: block;',
       };
@@ -79,3 +79,11 @@ export const exampleExtension = {
 //? Lógica: Mediante field.validation.
 
 //! Como esta extensión usa prePopulate, los cambios ocurren antes de que los Wrappers se ejecuten. Esto garantiza que el Wrapper reciba el label ya modificado.
+
+//* prePopulate ejemplos
+/*
+Traducciones: Buscas una clave en las props y la cambias por el texto traducido según el idioma del usuario.
+
+Seguridad: Si el usuario no tiene permisos de administrador, "hackeas" la propiedad disabled y la pones en true para todos los campos de una sección.
+
+Estándares de UI: Inyectas iconos o clases CSS de forma automática basándote en el key o el type del campo. */

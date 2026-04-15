@@ -76,6 +76,7 @@ export class Data {
     // return of(!isTaken)
   }
 
+
   //?field company_id
 
   /**
@@ -130,3 +131,13 @@ export class Data {
 // Seguridad: Elimina el riesgo de dejar suscripciones abiertas que consuman RAM o causen comportamientos erráticos en segundo plano.
 
 //? Regla de oro: Siempre que puedas, pasa el Observable directamente a Formly y deja que la librería gestione el ciclo de vida. Solo usa .subscribe() manual si necesitas realizar una lógica de negocio compleja fuera del formulario.
+
+
+
+//* Aunque técnicamente Formly lo acabará convirtiendo a booleano, mantener el objeto { clave: valor } te permite:
+
+// Seguir los estándares oficiales de Angular.
+
+// Poder reutilizar ese mismo servicio en otros formularios que no usen Formly (donde quizás sí necesites saber exactamente qué error ocurrió).
+
+// Claridad: En el código, null siempre grita "Sin errores", mientras que cualquier otra cosa grita "¡Problema!".

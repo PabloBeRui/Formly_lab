@@ -58,3 +58,8 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 
+//* Prioridad 1 (Local): Lo que escribes en el fields del componente (Fase 2 y 3).
+
+//* Prioridad 2 (Extensión): Lo que una extensión inyecta dinámicamente.
+
+//* Prioridad 3 (Global): Lo que hay en el appConfig (app.config.ts) con provideFormlyCore. Es el "fallback" o valor por defecto si no se especifica nada a nivel de campo o extensión.
